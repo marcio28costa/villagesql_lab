@@ -1,0 +1,39 @@
+
+version: '3.8'
+
+services:
+  villagesql:
+    image: villagesql/server:stable
+    container_name: villagesql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: village
+      MYSQL_ROOT_PASSWORD: village
+      MYSQL_USER: village
+      MYSQL_PASSWORD: village
+    ports:
+      - "3306:3306"
+    volumes:
+      - villagesql_data:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+    networks:
+      - labnet
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - labnet
+
+volumes:
+  villagesql_data:
+  ollama_data:
+
+networks:
+  labnet:
+    driver: bridge
