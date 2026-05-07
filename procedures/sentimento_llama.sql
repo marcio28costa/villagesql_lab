@@ -62,11 +62,13 @@ BEGIN
     SET sentimento = v_sentimento
     WHERE id = v_id;
 
-    SELECT CONCAT(
-      'ID ', v_id,
-      ' -> ',
-      v_sentimento
-    ) AS resultado;
+     SELECT CONCAT(
+        'ID ', v_id,
+        ' | ',
+        v_texto,
+        ' -> ',
+        v_sentimento
+      ) AS resultado;
 
   END LOOP;
 
