@@ -1,7 +1,8 @@
-
 DELIMITER $$
 
-CREATE PROCEDURE prc_sentimento_gemini()
+CREATE PROCEDURE prc_sentimento_gemini(
+  IN p_api_key TEXT
+)
 BEGIN
 
   DECLARE done INT DEFAULT FALSE;
@@ -34,8 +35,7 @@ BEGIN
     SET v_resposta = ai_prompt(
       'google',
       'gemini-2.5-flash',
-      -- @key, (sua chave)
-      'AIzaSyCt4pBhUBrXSpp0jkKrI4TQijMYMyGMvAQ',
+      p_api_key,
       CONCAT(
         'Responda SOMENTE com uma palavra: ',
         'positivo, negativo ou neutro. ',
@@ -50,7 +50,7 @@ BEGIN
     SET v_resposta = REPLACE(v_resposta, CHAR(10), '');
     SET v_resposta = REPLACE(v_resposta, CHAR(13), '');
 
-    -- tratamento definitivo
+    -- validação final
     SET v_sentimento =
       CASE
 
