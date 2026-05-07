@@ -1,37 +1,78 @@
-
 DELIMITER $$
 
-CREATE PROCEDURE ollama_prompt(
-  IN p_prompt TEXT,
-  OUT p_result TEXT
-)
+CREATE PROCEDURE prc_sentimento_llama()
 BEGIN
-  DECLARE v_payload TEXT;
-  DECLARE v_response TEXT;
-  DECLARE v_content TEXT;
 
-  SET v_payload = JSON_OBJECT(
-    'model','phi3:mini',
-    'prompt',p_prompt,
-    'stream',FALSE
-  );
+  DECLARE done INT DEFAULT FALSE;
 
-  SET v_response = CONVERT(
-    vsql_http.http_post(
-      'http://ollama:11434/api/generate',
-      'application/json',
-      v_payload
-    ) USING utf8mb4
-  );
+  DECLARE v_id INT;
+  DECLARE v_texto TEXT;
 
-  SET v_content = JSON_UNQUOTE(JSON_EXTRACT(v_response,'$.content'));
+  DECLARE v_resposta TEXT;
+  DECLARE v_sentimento VARCHAR(20);
 
-  SET p_result = TRIM(
-    SUBSTRING_INDEX(
-      JSON_UNQUOTE(JSON_EXTRACT(v_content,'$.response')),
-      CHAR(10),1
-    )
-  );
+  DECLARE cur CURSOR FOR
+    SELECT id, texto
+    FROM avaliacoes_llama
+    WHERE sentimento IS NULL;
+
+  DECLARE CONTINUE HANDLER FOR NOT FOUND
+    SET done = TRUE;
+
+  OPEN cur;
+
+  loop1: LOOP
+
+    FETCH cur INTO v_id, v_texto;
+
+    IF done THEN
+      LEAVE loop1;
+    END IF;
+
+    CALL ollama_prompt(
+      CONCAT(
+        'Responda SOMENTE com uma palavra: ',
+        'positivo, negativo ou neutro. ',
+        'Nao explique. ',
+        'Texto: ', v_texto
+      ),
+      v_resposta
+    );
+
+    SET v_resposta = LOWER(TRIM(v_resposta));
+    SET v_resposta = REPLACE(v_resposta, CHAR(10), '');
+    SET v_resposta = REPLACE(v_resposta, CHAR(13), '');
+
+    SET v_sentimento =
+      CASE
+
+        WHEN v_resposta LIKE '%positivo%'
+          THEN 'positivo'
+
+        WHEN v_resposta LIKE '%negativo%'
+          THEN 'negativo'
+
+        WHEN v_resposta LIKE '%neutro%'
+          THEN 'neutro'
+
+        ELSE 'indefinido'
+
+      END;
+
+    UPDATE avaliacoes_llama
+    SET sentimento = v_sentimento
+    WHERE id = v_id;
+
+    SELECT CONCAT(
+      'ID ', v_id,
+      ' -> ',
+      v_sentimento
+    ) AS resultado;
+
+  END LOOP;
+
+  CLOSE cur;
+
 END$$
 
 DELIMITER ;
