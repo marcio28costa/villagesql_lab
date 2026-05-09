@@ -2,10 +2,6 @@
 
 Projeto de laboratório utilizando MySQL com extensões do VillageSQL, integração com IA local utilizando Ollama e modelo LLM, além de exemplos de UUID, criptografia e classificação de sentimentos.
 
-Repositório oficial:
-
-urlVillageSQL Lab GitHub[https://github.com/marcio28costa/villagesql_lab/](https://github.com/marcio28costa/villagesql_lab/)
-
 ---
 
 # Visão Geral do Projeto
@@ -546,10 +542,6 @@ O principal objetivo deste laboratório é demonstrar que:
 Projeto desenvolvido por:
 
 **Marcio Costa**
-
-GitHub:
-
-urlmarcio28costa GitHub[https://github.com/marcio28costa](https://github.com/marcio28costa)
 
 Projeto:
 
