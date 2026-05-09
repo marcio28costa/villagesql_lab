@@ -545,7 +545,7 @@ Projeto desenvolvido por:
 
 Projeto:
 
-urlVillageSQL Lab Repository[https://github.com/marcio28costa/villagesql_lab/](https://github.com/marcio28costa/villagesql_lab/)
+[https://github.com/marcio28costa/villagesql_lab/]
 
 ---
 
