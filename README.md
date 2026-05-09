@@ -163,31 +163,33 @@ INSTALL EXTENSION vsql_http;
 #Instalar vsql_http (compilação)
 #Entrar no container
 
+```bash
 docker exec -it villagesql bash
+```
 
 #Instalar dependências
-
+```bash
 apt-get update && apt-get install -y \
 git cmake g++ libcurl4-openssl-dev pkg-config make
-
+```
 #Clonar e compilar
-
+```bash
 cd /tmp
 git clone https://github.com/villagesql/vsql-http.git
 cd vsql-http
-
+```
 #aumentar o tempo de resposta
-
+```bash
 sed -i 's/long timeout_s = 30/long timeout_s = 90/g' src/vsql_http.cc
 
 vsql-build-extension.sh /tmp/vsql-http
 exit
-
+```
 #Instalar no MySQL
-
+```bash
 docker exec -it villagesql mysql -uvillage -pvillage -A
 INSTALL EXTENSION vsql_http;
-
+```
 ---
 
 # O que o vsql_http permite?
