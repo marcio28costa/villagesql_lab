@@ -309,10 +309,110 @@ Tudo isso diretamente do banco de dados.
 Execute:
 
 ```sql
-CALL prc_sentimento_llama();
+mysql> show tables;
++-------------------+
+| Tables_in_village |
++-------------------+
+| avaliacoes        |
+| avaliacoes_gemini |
+| avaliacoes_llama  |
++-------------------+
+3 rows in set (0.02 sec)
+
+mysql> select * from avaliacoes_llama;
++----+------------------+---------------------------------+------------+---------------------+
+| id | produto          | texto                           | sentimento | criado_em           |
++----+------------------+---------------------------------+------------+---------------------+
+|  1 | Fone BT X200     | Chegou rapido, som excelente!   | NULL       | 2026-05-09 19:46:48 |
+|  2 | Tenis Runner Pro | Veio com defeito, decepcionante | NULL       | 2026-05-09 19:46:48 |
+|  3 | Mochila Urbana   | Qualidade razoavel pelo preco   | NULL       | 2026-05-09 19:46:48 |
++----+------------------+---------------------------------+------------+---------------------+
+3 rows in set (0.02 sec)
+
+mysql> call prc_sentimento_llama();
++--------------------------------------------------+
+| resultado                                        |
++--------------------------------------------------+
+| ID 1 | Chegou rapido, som excelente! -> positivo |
++--------------------------------------------------+
+1 row in set (9.11 sec)
+
++----------------------------------------------------+
+| resultado                                          |
++----------------------------------------------------+
+| ID 2 | Veio com defeito, decepcionante -> negativo |
++----------------------------------------------------+
+1 row in set (12.75 sec)
+
++----------------------------------------------------+
+| resultado                                          |
++----------------------------------------------------+
+| ID 3 | Qualidade razoavel pelo preco -> indefinido |
++----------------------------------------------------+
+1 row in set (1 min 50.33 sec)
+
+Query OK, 0 rows affected (1 min 50.34 sec)
+
+------------
+mysql> select * from avaliacoes_llama;
++----+------------------+---------------------------------+------------+---------------------+
+| id | produto          | texto                           | sentimento | criado_em           |
++----+------------------+---------------------------------+------------+---------------------+
+|  1 | Fone BT X200     | Chegou rapido, som excelente!   | positivo   | 2026-05-09 19:46:48 |
+|  2 | Tenis Runner Pro | Veio com defeito, decepcionante | negativo   | 2026-05-09 19:46:48 |
+|  3 | Mochila Urbana   | Qualidade razoavel pelo preco   | indefinido | 2026-05-09 19:46:48 |
++----+------------------+---------------------------------+------------+---------------------+
+3 rows in set (0.00 sec)
+-------------
+
+mysql> select * from avaliacoes_gemini;
++----+------------------+---------------------------------+------------+---------------------+
+| id | produto          | texto                           | sentimento | criado_em           |
++----+------------------+---------------------------------+------------+---------------------+
+|  1 | Fone BT X200     | Chegou rapido, som excelente!   | NULL       | 2026-05-09 19:46:48 |
+|  2 | Tenis Runner Pro | Veio com defeito, decepcionante | NULL       | 2026-05-09 19:46:48 |
+|  3 | Mochila Urbana   | Qualidade razoavel pelo preco   | NULL       | 2026-05-09 19:46:48 |
++----+------------------+---------------------------------+------------+---------------------+
+3 rows in set (0.01 sec)
+
+mysql> call prc_sentimento_gemini('Sua_chave_gemini');
++--------------------------------------------------+
+| resultado                                        |
++--------------------------------------------------+
+| ID 1 | Chegou rapido, som excelente! -> positivo |
++--------------------------------------------------+
+1 row in set (1.83 sec)
+
++----------------------------------------------------+
+| resultado                                          |
++----------------------------------------------------+
+| ID 2 | Veio com defeito, decepcionante -> negativo |
++----------------------------------------------------+
+1 row in set (3.14 sec)
+
++------------------------------------------------+
+| resultado                                      |
++------------------------------------------------+
+| ID 3 | Qualidade razoavel pelo preco -> neutro |
++------------------------------------------------+
+1 row in set (5.90 sec)
+
+Query OK, 0 rows affected (5.90 sec)
+
+----------------
+mysql> select * from avaliacoes_gemini;
++----+------------------+---------------------------------+------------+---------------------+
+| id | produto          | texto                           | sentimento | criado_em           |
++----+------------------+---------------------------------+------------+---------------------+
+|  1 | Fone BT X200     | Chegou rapido, som excelente!   | positivo   | 2026-05-09 19:46:48 |
+|  2 | Tenis Runner Pro | Veio com defeito, decepcionante | negativo   | 2026-05-09 19:46:48 |
+|  3 | Mochila Urbana   | Qualidade razoavel pelo preco   | neutro     | 2026-05-09 19:46:48 |
++----+------------------+---------------------------------+------------+---------------------+
+3 rows in set (0.00 sec)
+
 ```
 
----
+dro---
 
 # Exemplo de classificação
 
