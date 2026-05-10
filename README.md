@@ -226,8 +226,9 @@ Vantagens:
 Execute as procedures:
 
 ```sql
-source procedures/ollama_prompt.sql;
-source procedures/sentimento_llama.sql;
+docker exec -i villagesql mysql -uvillage -pvillage village < procedures/ollama_prompt.sql
+docker exec -i villagesql mysql -uvillage -pvillage village < procedures/gemini_sentimento.sql
+docker exec -i villagesql mysql -uvillage -pvillage village < procedures/sentimento_llama.sql
 ```
 
 ---
