@@ -475,12 +475,6 @@ SELECT uuid_v4();
 
 Instale a extensão:
 
-```bash
-bash extensions/install_crypto.sh
-```
-
-Depois:
-
 ```sql
 INSTALL EXTENSION vsql_crypto;
 ```
