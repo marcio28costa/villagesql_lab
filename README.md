@@ -411,9 +411,6 @@ mysql> select * from avaliacoes_gemini;
 3 rows in set (0.00 sec)
 
 ```
-
-dro---
-
 # Exemplo de classificação
 
 Entrada:
