@@ -649,12 +649,11 @@ O principal objetivo deste laboratório é demonstrar que:
 # Autor
 
 Projeto desenvolvido por:
-
 **Marcio Costa**
 
-Projeto:
+Este projeto possui caráter didático e tem como objetivo explorar funcionalidades modernas do VillageSQL na prática, incluindo integrações HTTP via SQL, recursos de IA com Ollama, UUID v7 e extensões avançadas sobre o MySQL.
 
-[https://github.com/marcio28costa/villagesql_lab/]
+A proposta é permitir estudos, testes e demonstrações técnicas utilizando recursos modernos e experimentais voltados para automação, APIs e novas possibilidades dentro do ecossistema MySQL.
 
 ---
 
